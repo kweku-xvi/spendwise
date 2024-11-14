@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/kweku-xvi/spendwise/api/v1/models"
 	"github.com/kweku-xvi/spendwise/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -19,6 +20,11 @@ func ConnectDB() {
 
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
+	}
+
+	err = DB.AutoMigrate(&models.User{})
+	if err != nil {
+		log.Fatal("failed to run database migrations:", err)
 	}
 
 	fmt.Println("Connected to database and migrations applied!")
